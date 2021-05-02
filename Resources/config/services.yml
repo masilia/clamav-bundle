@@ -1,0 +1,23 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    clamav.antivirus:
+        class: Masilia\ClamavBundle\Services\AntiVirus
+        arguments:
+            $socket: "%socket_path%"
+            $rootPath: "%root_path%"
+            $isStreamScan: "%enable_stream_scan%"
+        lazy: true
+
+    Masilia\ClamavBundle\Services\AntiVirusInterface: '@clamav.antivirus'
+
+    Masilia\ClamavBundle\Constraints\AntivirusValidator:
+        tags:
+            - { name: validator.constraint_validator }
+
+    Masilia\ClamavBundle\BinaryFieldType\Validator\AntivirusValidator:
+        arguments:
+            $isEnabled: "%enable_binary_field_type_validator%"

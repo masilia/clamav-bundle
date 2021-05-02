@@ -1,0 +1,8 @@
+services:
+    ezpublish.fieldType.ezbinaryfile:
+        class: '%ezpublish.fieldType.ezbinaryfile.class%'
+        arguments:
+          - [ '@ezpublish.fieldType.validator.black_list' ,'@Masilia\ClamavBundle\BinaryFieldType\Validator\AntivirusValidator' ]
+        parent: ezpublish.fieldType
+        tags:
+          - { name: ezpublish.fieldType, alias: ezbinaryfile }

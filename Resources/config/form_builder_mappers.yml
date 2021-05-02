@@ -1,0 +1,30 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    _instanceof:
+        EzSystems\EzPlatformFormBuilder\Form\Mapper\ValidatorConfigurationMapperInterface:
+            tags: ['ezplatform.form_builder.validator_form_type_mapper']
+        EzSystems\EzPlatformFormBuilder\Form\Mapper\ValidatorConstraintMapperInterface:
+            tags: ['ezplatform.form_builder.validator_constraint_mapper']
+        EzSystems\EzPlatformFormBuilder\FieldType\Field\FieldMapperInterface:
+            tags: ['ezplatform.form_builder.field_mapper']
+
+    ezplatform.form_builder.validator_constraint_mapper.antivirus:
+        class: EzSystems\EzPlatformFormBuilder\Form\Mapper\FieldValidator\BooleanFieldValidatorConstraintMapper
+        arguments:
+            $constraintClass: Masilia\ClamavBundle\Constraints\Antivirus
+            $typeIdentifier: 'antivirus'
+        tags:
+            - { name: ezplatform.form_builder.validator_constraint_mapper }
+
+    ezplatform.form_builder.validator_form_type_mapper.antivirus:
+        class: EzSystems\EzPlatformFormBuilder\Form\Mapper\FieldValidator\GenericFieldValidatorTypeMapper
+        arguments:
+            $formTypeClass: EzSystems\EzPlatformFormBuilder\Form\Type\FieldValidator\ValidatorCheckboxType
+            $typeIdentifier: 'antivirus'
+        tags:
+            - { name: ezplatform.form_builder.validator_form_type_mapper }
+

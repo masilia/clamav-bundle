@@ -1,0 +1,17 @@
+fields:
+    file:
+        name: 'File'
+        category: 'Basic form fields'
+        thumbnail: '/bundles/ezplatformadminui/img/ez-icons.svg#upload'
+        attributes:
+            help:
+                name: 'Help text'
+                type: 'string'
+            location:
+                name: 'Select file upload location'
+                type: 'location'
+        validators:
+            required: ~
+            upload_size: ~
+            extensions: ~
+            antivirus: ~

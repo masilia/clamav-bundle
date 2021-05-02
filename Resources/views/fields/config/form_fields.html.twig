@@ -1,0 +1,7 @@
+{% extends 'EzPlatformFormBuilderBundle:fields/config:form_fields.html.twig' %}
+
+{% trans_default_domain 'ezplatform_form_builder_fields' %}
+
+{% block _field_configuration_validators_antivirus_value_widget %}
+    {{ block('ezboolean') }}
+{% endblock %}

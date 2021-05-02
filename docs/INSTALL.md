@@ -10,8 +10,8 @@ Requirements
 ## Install instructions
 
 1. Add the project repository:
-    
-    In the main `composer.json`, add:
+
+   In the main `composer.json`, add:
     ```
     "repositories": [
         // ...
@@ -27,8 +27,8 @@ Requirements
     ``` bash
     $ composer require masilia/clamav-bundle
     ```
-    
-    2.1 Update the bundle via Composer if needed
+
+   2.1 Update the bundle via Composer if needed
     ``` bash
     $ composer update masilia/clamav-bundle
     ```
@@ -48,7 +48,7 @@ Requirements
    clamav-daemon
    clamav-freshclam
    ```
-    4.1 Under Debian distribution, run the following commands (adapt according to the distribution used):
+   4.1 Under Debian distribution, run the following commands (adapt according to the distribution used):
    ```bash
     apt-get install clamav &&
     apt-get install clamav-daemon &&
@@ -59,10 +59,10 @@ Requirements
     ``` bash
     /etc/init.d/clamav-freshclam stop && freshclam
     ```
-   4.3 Config the ClamAv service:            
+   4.3 Config the ClamAv service:
    * 4.3.1 run the clamAv with TCP|IP protocol.   
-    -- Under the file `/etc/clamav/clamd.conf` Add these lines to the config:
-     
+     -- Under the file `/etc/clamav/clamd.conf` Add these lines to the config:
+
    ```
    TCPSocket {{port}} (3310 often we choose this one)
    TCPAddr {{server ip}} (127.0.0.1 if the clamav service is installed locally)
@@ -71,8 +71,8 @@ Requirements
     ```
     ListenStream = {{ip: port}} (127.0.0.1:3310 in our example)
     ```
-    * 4.3.2 or run the clamAv with UNIX socket protocol.  
-    -- Under the file /etc/clamav/clamd.conf Add the line :
+   * 4.3.2 or run the clamAv with UNIX socket protocol.  
+     -- Under the file /etc/clamav/clamd.conf Add the line :
    ```
     LocalSocket: /var/run/clamav/clamd.sock
     ```
@@ -85,7 +85,7 @@ Requirements
     ``` bash
       $ usermod -a -G www-data clamav && /etc/init.d/clamav-daemon restart
     ```
-   * To make sure, execute the command : 
+   * To make sure, execute the command :
    ```bash
     $ groups clamav
    ```
@@ -93,7 +93,7 @@ Requirements
    ```
      clamav : clamav www-data
    ```
-      
+
 
 * To make sure that our clamav-daemon service is running under the socket ip:port configured  or the unix local socket , we execute the command :
 ``` bash
@@ -117,22 +117,22 @@ TCP   0         0 127.0.0.1:3310            0.0.0.0.*           LISTEN          
 5. Configuration of app/config/config.yml file
 
 -
-  ```yaml
-  masilia_clamav:
-      #required config , 'unix:///path/to/clamav/unix_local_socket' if unix socket or 'tcp://ip:port' if tcp|ip socket>>
-      socket_path: 'unix:///path/to/clamav/unix_local_socket|tcp://ip:port'
-      #optional config, if you have chroot partition in your server you can the path 
-      root_path: '/opt/www/project-root' ('' as default)
-      #optional config, you can add it if your form is handled with ezForm Builder 
-      ezform_builder_enabled: true|false (false as default)
-      #optional config, if we want to scan on streaming the uploaded file
-      # if the clamAv is running in the remote server , we must use the the TCP|IP protocol and enable the stream scan
-      # when there issue with the scan and you get in logs the message like ('reason' => 'lstat()'), this option may resolve your issue
-      enable_stream_scan: true|false (false as default value)
-      #To enable validation on BO with ezbinaryfile FieldType
-      enable_binary_field_type_validator: true|false (false as default value)
-     
-  ```
+```yaml
+masilia_clamav:
+    #required config , 'unix:///path/to/clamav/unix_local_socket' if unix socket or 'tcp://ip:port' if tcp|ip socket>>
+    socket_path: 'unix:///path/to/clamav/unix_local_socket|tcp://ip:port'
+    #optional config, if you have chroot partition in your server you can the path 
+    root_path: '/opt/www/project-root' ('' as default)
+    #optional config, you can add it if your form is handled with ezForm Builder 
+    ezform_builder_enabled: true|false (false as default)
+    #optional config, if we want to scan on streaming the uploaded file
+    # if the clamAv is running in the remote server , we must use the the TCP|IP protocol and enable the stream scan
+    # when there issue with the scan and you get in logs the message like ('reason' => 'lstat()'), this option may resolve your issue
+    enable_stream_scan: true|false (false as default value)
+    #To enable validation on BO with ezbinaryfile FieldType
+    enable_binary_field_type_validator: true|false (false as default value)
+   
+```
 
 
 Usage
@@ -141,7 +141,7 @@ Usage
 5.1 Antivirus constraint
 
 - In symfony object form
-To enable Antivirus constraint on your form Type for the input file add the following lines .
+  To enable Antivirus constraint on your form Type for the input file add the following lines .
 
     ```php
     <?php
@@ -164,13 +164,13 @@ To enable Antivirus constraint on your form Type for the input file add the foll
 - In BO to active scan with ezbinaryfile FiledType you can just pass the parameter ```enable_binary_field_type_validator``` to ``true``
 
 5.4 Customize error message
-* To customize server error message add this message error key "antivirus_constraint_message" in messages translation file Resources/translations/messages.{locale}.{yml|php|xliff} 
+* To customize server error message add this message error key "antivirus_constraint_message" in messages translation file Resources/translations/messages.{locale}.{yml|php|xliff}
 6. Override the antivirus service
-*To do, you implement the interface ``Masilia\ClamavBundle\Services\AntivirusInterface`` and the value to return from your service is an array with keys `[status => Ok|KO]` and `[reason => ' your statment ... ']` 
-* then declare your service as following:   
+   *To do, you implement the interface ``Masilia\ClamavBundle\Services\AntivirusInterface`` and the value to return from your service is an array with keys `[status => Ok|KO]` and `[reason => ' your statment ... ']`
+* then declare your service as following:
 ```Yaml
 services:
-     Masilia\ClamavBundle\Services\AntiVirusInterface: '@your.antivirus.service_alias'
+   Masilia\ClamavBundle\Services\AntiVirusInterface: '@your.antivirus.service_alias'
 ```
 
 Troubleshooting
